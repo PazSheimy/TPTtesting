@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>TESS Proposal Tool</title>
+        <link rel="stylesheet" href="/static/style_tess.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+        <link rel="stylesheet" href="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.css" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+        <script type="text/javascript" src="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.js"></script>
+    </head>
+<body>
+    <div class="main-container">
+        <nav>
+            <img id="logo" src="/static/nasa_logo.svg" alt="nasa logo">
+            <h1>Welcome to the TESS Proposal Tool</h1>
+            <img id="satellite" src="/static/satellite.png" alt="TESS satellite">
+        </nav>
+        <div class="graph-query-container">
+            <div class="search-input">
+                <div class="search-input-1">
+                    <h2>Search by RA, Dec, Object Name, TIC ID</h2>
+                    <form action="/sectors" method="post">
+                        <input id="search_input" type="text" name="search_input"
+                            placeholder="RA, Dec, Object Name, or TIC ID" size="30">
+                        <input class="input-radius" id="radius" type="text" name="radius"
+                            placeholder="Radius (degrees)">
+                        <input type="number" id="sector" name="sector" placeholder="Sector number (optional)" size="15">
+                        <input type="submit" value="Search">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <form action="/csv_upload" method="post" enctype="multipart/form-data">
+            <div class="search-csv">
+                <h2>Alternatively, you can search by uploading a CSV file containing coordinates.</h2>
+                <div class="search-csv-buttons">
+                    <div class="search-csv-buttons-left">
+                        <input type="file" name="csv_file">
+                    </div>
+                    <div class="search-csv-buttons-right">
+                        <input class="input-radius" id="radius" type="text" name="radius"
+                            placeholder="Radius (degrees)">
+                        <input type="submit" value="Submit">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <p>Download results as <a href="{{ url_for('download', results=results) }}">CSV file</a></p>
+        <div class="plot1">
+            {{ diagram1|safe }}
+        </div>
+        <div class="plot2">
+            {{ diagram2|safe }}
+        </div>
+        <div class="plot3">
+            {{ diagram4|safe }}
+        </div>
+        <div class="plot4">
+            {{ diagram3|safe }}
+        </div>
+    </div>
+</body>
+</html>
