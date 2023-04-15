@@ -176,16 +176,27 @@
                                 }
                             });
                         } else {
-                            aladin.gotoObject(target, function (found) {
-                                if (found) {
-                                    var ra = aladin.view.getRa();
-                                    var dec = aladin.view.getDec();
+                            // Handle target name input
+                            console.log('Trying to resolve target name:', target);
+                            aladin.gotoObject(target);
+
+                            // Use setTimeout() to delay the execution of the code after the view has updated
+                            setTimeout(function () {
+                                var raDec = aladin.getRaDec();
+                                var ra = raDec[0];
+                                var dec = raDec[1];
+
+                                // Check if the target is within the view after the delay
+                                if (Math.abs(aladin.getFov()[0]) >= 0.0001) {
+                                    console.log('Target name found:', target);
                                     add_target_to_sky_map(aladin, aladinOverlay, ra, dec, target, "red");
                                 } else {
+                                    console.error('Error: Target name not found:', target);
                                     alert('Error: Target name not found');
                                 }
-                            });
+                            }, 500); // Adjust the delay as needed (in milliseconds)
                         }
+
                     }
 
                     // Check if a CSV file is uploaded
