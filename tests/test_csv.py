@@ -60,3 +60,33 @@ def test_download(client):
         test_response = download()
         assert test_response.status_code == 200
         assert test_response.data == b"RA,Dec,Sector,Camera,Cycle,Observation Date\r\n5.53,-5.39,3,1,1,'2020-09-23T09:17:16.310'\r\n,,30,1,3,'2018-09-20T13:07:46.125'\r\n,,42,2,4,'2021-08-21T04:35:18.433'\r\n"
+        
+        def test_invalid_csv_upload(client):
+    csv_file = None
+
+    with open(r'C:\Users\sheim\OneDrive\Desktop\testingfinalprojecttpt\TPTtesting-master\tests\test_files\invalid_test.csv', 'rb') as csv_file:
+        # Make a POST request to the csv_upload route with the temporary CSV file and a radius value
+        response = client.post('/csv_upload', data={'csv_file': csv_file, 'radius': '0.01'})
+
+        # Check if the response contains an error message
+        assert b'<div class="alert alert-danger">' in response.data
+
+def test_invalid_radius_value(client):
+    csv_file = None
+
+    with open(r'C:\Users\sheim\OneDrive\Desktop\testingfinalprojecttpt\TPTtesting-master\tests\test_files\test1.csv', 'rb') as csv_file:
+        # Test with a non-numeric radius value
+        response = client.post('/csv_upload', data={'csv_file': csv_file, 'radius': 'invalid_radius'})
+        
+        # Check if the response contains an error message
+        assert b'<div class="alert alert-danger">' in response.data
+
+def test_no_csv_file_upload(client):
+    # Make a POST request to the csv_upload route without a CSV file and a radius value
+    response = client.post('/csv_upload', data={'radius': '0.01'})
+
+    # Print the response data for debugging purposes
+    print(response.data)
+
+    # Check if the response contains an error message
+    assert b'<div class="alert alert-danger">' in response.data
