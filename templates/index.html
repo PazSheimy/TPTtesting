@@ -17,9 +17,16 @@
 <body>
     <div class="main-container">
         <nav>
-            <img id="logo" src="/static/nasa_logo.svg" alt="nasa logo">
-            <h1>Welcome to the TESS Proposal Tool</h1>
-            <img id="satellite" src="/static/satellite.png" alt="TESS satellite">
+            <div class="nav-title">
+                <img id="logo" src="/static/nasa_logo.svg" alt="nasa logo">
+                <h1>Welcome to the TESS Proposal Tool</h1>
+                <img id="satellite" src="/static/satellite.png" alt="TESS satellite">
+            </div>
+            <div class="nav-error">
+                {% if error %}
+                    <div id="error_message" class="alert alert-danger">ERROR: {{ error }}</div>
+                {% endif %}
+            </div>
         </nav>
         <div class="sky-map">
             <form id="form-sky" method="post" enctype="multipart/form-data">
