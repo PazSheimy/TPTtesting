@@ -103,7 +103,7 @@ def test_error1():
     driver.maximize_window()
 
     element = driver.find_element(By.ID, "search_input")
-    element.send_keys("adc")
+    element.send_keys("sirius")
     element = driver.find_element(By.ID, "radius")
     element.send_keys("def")
     element = driver.find_element(By.ID, "search_btn")
