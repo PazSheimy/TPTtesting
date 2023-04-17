@@ -49,7 +49,7 @@ def test_csv_upload(client):
         assert response.status_code == 200
         
         # Check if csv upload has an error
-        assert b'<div class="alert alert-danger">' not in response.data
+        assert b'<div id="error_message" class="alert alert-danger">' not in response.data
 
 
 def test_download(client):
@@ -73,7 +73,7 @@ def test_download(client):
         response = client.post('/csv_upload', data={'csv_file': csv_file, 'radius': '0.01'})
 
         # Check if the response contains an error message
-        assert b'<div class="alert alert-danger">' in response.data
+        assert b'<div id="error_message" class="alert alert-danger">' in response.data
 
 def test_invalid_radius_value(client):
     csv_file = None
@@ -83,7 +83,7 @@ def test_invalid_radius_value(client):
         response = client.post('/csv_upload', data={'csv_file': csv_file, 'radius': 'invalid_radius'})
         
         # Check if the response contains an error message
-        assert b'<div class="alert alert-danger">' in response.data
+        assert b'<div id="error_message" class="alert alert-danger">' in response.data
 
 def test_no_csv_file_upload(client):
     # Make a POST request to the csv_upload route without a CSV file and a radius value
@@ -93,7 +93,7 @@ def test_no_csv_file_upload(client):
     print(response.data)
 
     # Check if the response contains an error message
-    assert b'<div class="alert alert-danger">' in response.data
+    assert b'<div id="error_message" class="alert alert-danger">' in response.data
     
    
 # checks if error is thrown when entering only characters
